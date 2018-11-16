@@ -1,10 +1,4 @@
-const err = (property, expectedType, actualValue) =>
-  `Validation error: ${property} expected ${expectedType} got ${actualValue}`
-
-const createErrorMessage = (expectedType, actualValue) => property =>
-  err(property, expectedType, actualValue)
-
-const isNil = value => value === null || value === undefined
+const { err, createErrorMessage, isNil, compose } = require('./utils')
 
 const schema = {
   number: value => [
@@ -29,8 +23,6 @@ const schema = {
 
   default: defaultValue => value => isNil(value) && defaultValue,
 }
-
-const compose = funs => value => funs.reduce((_, fun) => fun(value), null)
 
 const validate = (schema, data) => {
   const newData = Object.assign({}, data)

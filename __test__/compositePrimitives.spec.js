@@ -1,4 +1,4 @@
-const { schema, validate } = require('../index')
+const { schema, validate } = require('src/index')
 const {
   primitivesInvalidData,
   primitivesValidData,

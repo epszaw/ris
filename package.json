@@ -7,9 +7,19 @@
   "author": "lamartire <lamartire@gmail.com>",
   "license": "GNU 3.0",
   "private": false,
+  "scripts": {
+    "size-limit": "size-limit"
+  },
+  "size-limit": [
+    {
+      "path": "./src/index.js",
+      "limit": "2 KB"
+    }
+  ],
   "jest": {
     "testURL": "http://localhost/",
     "moduleNameMapper": {
+      "src/(.*)$": "<rootDir>/src/$1",
       "^__fixtures__/(.*)$": "<rootDir>/__test__/__fixtures__/$1"
     }
   },
@@ -22,6 +32,7 @@
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-standard": "^4.0.0",
     "jest": "^23.6.0",
-    "prettier": "^1.15.2"
+    "prettier": "^1.15.2",
+    "size-limit": "^0.21.0"
   }
 }
