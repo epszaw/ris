@@ -1,0 +1,25 @@
+{
+  "name": "ris",
+  "version": "0.0.0",
+  "description": "Runtime imperceptible schemes",
+  "main": "index.js",
+  "repository": "git@github.com:lamartire/ris.git",
+  "author": "lamartire <lamartire@gmail.com>",
+  "license": "GNU 3.0",
+  "private": false,
+  "prettier": {
+    "semi": false,
+    "singleQuote": true,
+    "trailingComma": "all"
+  },
+  "jest": {
+    "testURL": "http://localhost/",
+    "moduleNameMapper": {
+      "^__fixtures__/(.*)$": "<rootDir>/__test__/__fixtures__/$1"
+    }
+  },
+  "devDependencies": {
+    "jest": "^23.6.0",
+    "prettier": "^1.15.2"
+  }
+}
