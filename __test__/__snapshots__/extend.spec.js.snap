@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`extend should add new rules to schema and allows to use it 1`] = `"Validation error: foo expected Even got 3"`;
+
+exports[`extend should add new rules to schema with custom error message and allows to use it 1`] = `"Given value must be even number, got 3"`;

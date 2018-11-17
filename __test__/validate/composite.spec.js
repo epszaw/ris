@@ -18,7 +18,7 @@ describe('composition with default value', () => {
 })
 
 describe('composition with meta rules', () => {
-  it('should correctly validate max and min numbers', () => {
+  it('should correctly validate max/min numbers', () => {
     const compositeSchema = {
       foo: [schema.number, schema.min(2), schema.max(5)],
     }
@@ -53,6 +53,34 @@ describe('composition with meta rules', () => {
       }),
     ).toEqual({
       foo: 4,
+    })
+  })
+
+  it('should correctly validate strings with regexp', () => {
+    const compositeSchema = {
+      foo: [schema.string, schema.regexp(/(bar)/)],
+    }
+
+    expect(
+      validate(compositeSchema, {
+        foo: 'bar',
+      }),
+    ).toEqual({
+      foo: 'bar',
+    })
+  })
+
+  it('should correctly validate strings with regexp and returns default value', () => {
+    const compositeSchema = {
+      foo: [schema.string, schema.regexp(/(bar)/), 'bar'],
+    }
+
+    expect(
+      validate(compositeSchema, {
+        foo: 'foo',
+      }),
+    ).toEqual({
+      foo: 'bar',
     })
   })
 })

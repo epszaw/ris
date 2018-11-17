@@ -59,4 +59,19 @@ describe('Schema rules', () => {
       expect(schema.null(1)).toEqual([false, 1, expect.any(Function)])
     })
   })
+
+  describe('regexp', () => {
+    it('should correctly validate data', () => {
+      expect(schema.regexp(/[a-z]+/)('hello')).toEqual([
+        true,
+        'hello',
+        expect.any(Function),
+      ])
+      expect(schema.regexp(/[a-z]+/)(123)).toEqual([
+        false,
+        123,
+        expect.any(Function),
+      ])
+    })
+  })
 })

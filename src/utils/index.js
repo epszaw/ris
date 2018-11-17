@@ -4,23 +4,16 @@ const createErrorMessage = (e, a) => p => err(p, e, a)
 
 const isNil = v => v === null || v === undefined
 
-const compose = fs => v =>
-  fs.reduce((a, f, i) => {
-    if (i === 0) {
-      return f(v)
-    }
+const last = a => a[a.length - 1]
 
-    return f(a)
-  }, null)
+const compose = fs => v => fs.reduce((a, f, i) => (i === 0 ? f(v) : f(a)), null)
 
 const getDefaultValue = e => {
-  if (Array.isArray(e)) {
-    const l = e[e.length - 1]
+  if (!Array.isArray(e)) return null
 
-    return l instanceof Function ? null : l
-  }
+  const l = last(e)
 
-  return null
+  return l instanceof Function ? null : l
 }
 
 module.exports = {

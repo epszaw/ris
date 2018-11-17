@@ -15,17 +15,17 @@ const validate = (s, d) => {
       }
     } else {
       const defaultValue = getDefaultValue(s[k])
-      const rules = [].concat(s[k])
-      const r = compose(
-        defaultValue ? rules.slice(0, rules.length - 1) : rules,
-      )(nd[k])
+      const rls = [].concat(s[k])
+      const res = compose(defaultValue ? rls.slice(0, rls.length - 1) : rls)(
+        nd[k],
+      )
 
-      if (!r[0] && defaultValue) {
+      if (!res[0] && defaultValue) {
         Object.assign(nd, {
           [k]: defaultValue,
         })
-      } else if (!r[0]) {
-        e.push(r[2](k))
+      } else if (!res[0]) {
+        e.push(res[2](k))
       }
     }
   })
