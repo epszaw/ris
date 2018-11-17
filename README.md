@@ -1,11 +1,3 @@
-[number, min(10), max(30)]
+# Ris [![Build Status](https://travis-ci.org/lamartire/ris.svg?branch=master)](https://travis-ci.org/lamartire/ris)
 
-number -> min -> max
-
-number --> [bool, value, err] --> 
-   min --> [bool, value, err] --> 
-   max --> [bool, value, err] --> 
-   ...
-
----
-
+> Runtime imperceptible schemes

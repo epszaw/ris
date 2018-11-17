@@ -4,8 +4,6 @@ const {
   primitivesValidData,
 } = require('__fixtures__/data/primitive')
 
-describe('schema', () => {})
-
 describe('validate', () => {
   const primitivesSchema = {
     foo: schema.string,

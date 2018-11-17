@@ -1,13 +1,9 @@
 const { schema, validate } = require('src/index')
-const {
-  primitivesInvalidData,
-  primitivesValidData,
-} = require('__fixtures__/data/primitive')
 
 describe('composition with default value', () => {
   it('should replace failed', () => {
     const primitivesSchema = {
-      foo: [schema.string, schema.default('bar')],
+      foo: [schema.string, 'bar'],
     }
 
     expect(
@@ -21,8 +17,8 @@ describe('composition with default value', () => {
 
   it('should replace multiple failed', () => {
     const primitivesSchema = {
-      foo: [schema.string, schema.default('bar')],
-      beep: [schema.number, schema.default(1)],
+      foo: [schema.string, 'bar'],
+      beep: [schema.number, 1],
     }
 
     expect(
@@ -34,5 +30,31 @@ describe('composition with default value', () => {
       foo: 'bar',
       beep: 1,
     })
+  })
+})
+
+describe('composition with meta rules', () => {
+  it('should correctly validate max and min numbers', () => {
+    const compositeSchema = {
+      foo: [schema.number, schema.min(2), schema.max(5)],
+    }
+
+    expect(
+      validate(compositeSchema, {
+        foo: 3,
+      }),
+    ).toEqual({
+      foo: 3,
+    })
+    expect(() =>
+      validate(compositeSchema, {
+        foo: 8,
+      }),
+    ).toThrow()
+    expect(() =>
+      validate(compositeSchema, {
+        foo: 1,
+      }),
+    ).toThrowErrorMatchingSnapshot()
   })
 })
