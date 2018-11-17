@@ -1,40 +1,40 @@
 const { compose, getDefaultValue } = require('./utils')
 
-const validate = (schema, data) => {
-  const newData = Object.assign({}, data)
-  const errors = []
+const validate = (s, d) => {
+  const nd = Object.assign({}, d)
+  const e = []
 
-  Object.keys(newData).forEach(key => {
-    if (newData[key] instanceof Object) {
+  Object.keys(nd).forEach(k => {
+    if (nd[k] instanceof Object) {
       try {
-        const res = validate(schema[key], newData[key])
+        const res = validate(s[k], nd[k])
 
         console.log(res)
       } catch (err) {
         console.log(err.message)
       }
     } else {
-      const defaultValue = getDefaultValue(schema[key])
-      const rules = [].concat(schema[key])
-      const result = compose(
+      const defaultValue = getDefaultValue(s[k])
+      const rules = [].concat(s[k])
+      const r = compose(
         defaultValue ? rules.slice(0, rules.length - 1) : rules,
-      )(newData[key])
+      )(nd[k])
 
-      if (!result[0] && defaultValue) {
-        Object.assign(newData, {
-          [key]: defaultValue,
+      if (!r[0] && defaultValue) {
+        Object.assign(nd, {
+          [k]: defaultValue,
         })
-      } else if (!result[0]) {
-        errors.push(result[2](key))
+      } else if (!r[0]) {
+        e.push(r[2](k))
       }
     }
   })
 
-  if (errors.length > 0) {
-    throw new Error(errors.join('\n'))
+  if (e.length > 0) {
+    throw new Error(e.join('\n'))
   }
 
-  return newData
+  return nd
 }
 
 module.exports = {

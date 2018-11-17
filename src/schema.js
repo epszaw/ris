@@ -1,37 +1,25 @@
 const { createErrorMessage } = require('./utils')
 
 const schema = {
-  number: value => [
-    typeof value === 'number',
-    value,
-    createErrorMessage('Number', value),
+  number: v => [typeof v === 'number', v, createErrorMessage('Number', v)],
+
+  string: v => [typeof v === 'string', v, createErrorMessage('String', v)],
+
+  boolean: v => [typeof v === 'boolean', v, createErrorMessage('Boolean', v)],
+
+  min: e => v => [
+    v[0] === false ? false : v[1] >= e,
+    v[1],
+    createErrorMessage('min', v[1]),
   ],
 
-  string: value => [
-    typeof value === 'string',
-    value,
-    createErrorMessage('String', value),
+  max: e => v => [
+    v[0] === false ? false : v[1] <= e,
+    v[1],
+    createErrorMessage('max', v[1]),
   ],
 
-  boolean: value => [
-    typeof value === 'boolean',
-    value,
-    createErrorMessage('Boolean', value),
-  ],
-
-  min: expectedValue => value => [
-    value[0] === false ? false : value[1] >= expectedValue,
-    value[1],
-    createErrorMessage('min', value[1]),
-  ],
-
-  max: expectedValue => value => [
-    value[0] === false ? false : value[1] <= expectedValue,
-    value[1],
-    createErrorMessage('max', value[1]),
-  ],
-
-  null: value => [value === null, value, createErrorMessage('null', value)],
+  null: v => [v === null, v, createErrorMessage('null', v)],
 }
 
 module.exports = {

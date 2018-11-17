@@ -9,9 +9,25 @@
   "private": false,
   "scripts": {
     "test": "jest",
+    "lint": "eslint src/**/*.js",
+    "format": "prettier src/**/*.js __test__/**/*.js --write",
     "size-limit": "size-limit",
     "semantic-release": "semantic-release",
     "travis-deploy-once": "travis-deploy-once"
+  },
+  "lint-staged": {
+    "src/index.js": [
+      "size-limit"
+    ],
+    "src/**/*.js": [
+      "lint",
+      "format",
+      "git add"
+    ]
+  },
+  "husky": {
+    "pre-commit": "lint-staged",
+    "pre-push": "jest"
   },
   "release": {
     "prepare": [
@@ -24,7 +40,7 @@
   "size-limit": [
     {
       "path": "./src/index.js",
-      "limit": "2 KB"
+      "limit": "1 KB"
     }
   ],
   "jest": {
@@ -45,7 +61,9 @@
     "eslint-plugin-prettier": "^3.0.0",
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-standard": "^4.0.0",
+    "husky": "^1.1.4",
     "jest": "^23.6.0",
+    "lint-staged": "^8.0.5",
     "prettier": "^1.15.2",
     "semantic-release": "^15.12.0",
     "size-limit": "^0.21.0",

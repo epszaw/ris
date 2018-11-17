@@ -1,25 +1,23 @@
-const err = (property, expectedType, actualValue) =>
-  `Validation error: ${property} expected ${expectedType} got ${actualValue}`
+const err = (p, e, a) => `Validation error: ${p} expected ${e} got ${a}`
 
-const createErrorMessage = (expectedType, actualValue) => property =>
-  err(property, expectedType, actualValue)
+const createErrorMessage = (e, a) => p => err(p, e, a)
 
-const isNil = value => value === null || value === undefined
+const isNil = v => v === null || v === undefined
 
-const compose = funs => value =>
-  funs.reduce((acc, fun, i) => {
+const compose = fs => v =>
+  fs.reduce((a, f, i) => {
     if (i === 0) {
-      return fun(value)
+      return f(v)
     }
 
-    return fun(acc)
+    return f(a)
   }, null)
 
-const getDefaultValue = entry => {
-  if (Array.isArray(entry)) {
-    const lastElement = entry[entry.length - 1]
+const getDefaultValue = e => {
+  if (Array.isArray(e)) {
+    const l = e[e.length - 1]
 
-    return lastElement instanceof Function ? null : lastElement
+    return l instanceof Function ? null : l
   }
 
   return null
