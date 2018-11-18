@@ -1,4 +1,4 @@
-const { compose } = require('src/utils/index')
+const { compose } = require('src/index')
 
 describe('compose', () => {
   it('should call given functions in sequence and pass result to next', () => {

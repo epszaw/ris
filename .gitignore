@@ -63,3 +63,6 @@ typings/
 # Ide
 .idea
 .vscode
+
+# Build
+ris.min.js

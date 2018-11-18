@@ -1,5 +1,4 @@
-const { schema, validate } = require('src/index')
-const { extend } = require('src/extend')
+const { schema, extend, validate } = require('src/index')
 
 describe('extend', () => {
   it('should add new rules to schema and allows to use it', () => {

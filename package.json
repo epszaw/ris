@@ -2,7 +2,7 @@
   "name": "ris",
   "version": "0.0.0-development",
   "description": "Runtime imperceptible schemes",
-  "main": "index.js",
+  "main": "./ris.min.js",
   "repository": "git@github.com:lamartire/ris.git",
   "author": "lamartire <lamartire@gmail.com>",
   "license": "GNU 3.0",
@@ -11,13 +11,19 @@
     "test": "jest",
     "lint": "eslint src/**/*.js",
     "format": "prettier src/**/*.js __test__/**/*.js --write",
-    "size-limit": "size-limit",
+    "build": "node ./build",
+    "size": "size-limit",
     "semantic-release": "semantic-release",
     "travis-deploy-once": "travis-deploy-once"
   },
+  "browserslist": [
+    "last 3 versions",
+    "not dead",
+    "ie >= 9"
+  ],
   "lint-staged": {
-    "src/index.js": [
-      "size-limit"
+    "ris.min.js": [
+      "size"
     ],
     "src/**/*.js": [
       "lint",
@@ -26,7 +32,7 @@
     ]
   },
   "husky": {
-    "pre-commit": "lint-staged",
+    "pre-commit": "npm run build && lint-staged",
     "pre-push": "jest"
   },
   "release": {
@@ -39,7 +45,7 @@
   },
   "size-limit": [
     {
-      "path": "./src/index.js",
+      "path": "./ris.min.js",
       "limit": "1 KB"
     }
   ],
@@ -51,6 +57,8 @@
     }
   },
   "devDependencies": {
+    "@babel/core": "^7.1.6",
+    "@babel/preset-env": "^7.1.6",
     "@semantic-release/changelog": "^3.0.1",
     "@semantic-release/git": "^7.0.5",
     "eslint": "^5.9.0",
@@ -65,6 +73,9 @@
     "jest": "^23.6.0",
     "lint-staged": "^8.0.5",
     "prettier": "^1.15.2",
+    "rollup": "^0.67.3",
+    "rollup-plugin-babel": "^4.0.3",
+    "rollup-plugin-uglify": "^6.0.0",
     "semantic-release": "^15.12.0",
     "size-limit": "^0.21.0",
     "travis-deploy-once": "^5.0.9"
