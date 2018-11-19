@@ -114,7 +114,7 @@ const validate = (s, d, p) => {
           [k]: defaultValue,
         })
       } else if (!res[0]) {
-        e.push(res[2](k))
+        e.push(res[2](p ? `${p}.${k}` : k))
       }
     }
   })

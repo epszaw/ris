@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`validate – schema with nested schema should correctly validate data with multiple properties mixed with objects 1`] = `
+"Validation error: foo expected String got 8
+Validation error: bar expected Boolean got undefined
+Validation error: baz.foo expected Number got bar
+Validation error: baz.bar.foo expected String got null"
+`;
+
+exports[`validate – schema with nested schema should correctly validate data with nested objects 1`] = `"Validation error: bar.baz expected Number got foo"`;

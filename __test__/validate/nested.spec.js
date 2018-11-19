@@ -2,6 +2,8 @@ const { schema, validate } = require('src/index')
 const {
   validNestedData,
   invalidNestedData,
+  validNestedBigData,
+  invalidNestedBigData,
 } = require('__fixtures__/data/nested')
 
 describe('validate – schema with nested schema', () => {
@@ -21,6 +23,26 @@ describe('validate – schema with nested schema', () => {
     })
     expect(() => {
       validate(nestedSchema, invalidNestedData)
-    }).toThrow()
+    }).toThrowErrorMatchingSnapshot()
+  })
+
+  it('should correctly validate data with multiple properties mixed with objects', () => {
+    const nestedSchema = {
+      foo: schema.string,
+      bar: schema.boolean,
+      baz: {
+        foo: schema.number,
+        bar: {
+          foo: schema.string,
+        },
+      },
+    }
+
+    expect(validate(nestedSchema, validNestedBigData)).toEqual(
+      validNestedBigData,
+    )
+    expect(() => {
+      validate(validate(nestedSchema, invalidNestedBigData))
+    }).toThrowErrorMatchingSnapshot()
   })
 })
