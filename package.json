@@ -16,11 +16,6 @@
     "semantic-release": "semantic-release",
     "travis-deploy-once": "travis-deploy-once"
   },
-  "browserslist": [
-    "last 3 versions",
-    "not dead",
-    "ie >= 9"
-  ],
   "lint-staged": {
     "ris.min.js": [
       "size"
@@ -49,12 +44,54 @@
       "limit": "1 KB"
     }
   ],
+  "browserslist": [
+    "last 3 versions",
+    "not dead",
+    "ie >= 9"
+  ],
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ]
+  },
+  "eslintConfig": {
+    "extends": [
+      "standard",
+      "prettier",
+      "prettier/standard"
+    ],
+    "plugins": [
+      "prettier"
+    ],
+    "env": {
+      "jest": true,
+      "node": true
+    },
+    "rules": {
+      "prettier/prettier": [
+        "error",
+        {
+          "semi": false,
+          "singleQuote": true,
+          "trailingComma": "all"
+        }
+      ]
+    }
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true,
+    "trailingComma": "all"
+  },
   "jest": {
     "testURL": "http://localhost/",
     "moduleNameMapper": {
       "src/(.*)$": "<rootDir>/src/$1",
       "^__fixtures__/(.*)$": "<rootDir>/__test__/__fixtures__/$1"
     }
+  },
+  "resolutions": {
+    "babel-core": "7.0.0-bridge.0"
   },
   "devDependencies": {
     "@babel/core": "^7.1.6",

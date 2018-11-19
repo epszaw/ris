@@ -60,38 +60,14 @@ validate(s, data)
 // Validation error: bar expected Number got hello
 ```
 
-## Extending
+## Adding rules
 
 ```js
-import { extend } form 'ris'
+import { rule } form 'ris'
 
 const even = (v) => v % 2 === 0
 
-extend('even', even, 'Even')
-```
-
-```js
-import { schema, validate } from 'ris'
-
-const s = {
-  foo: schema.even,
-}
-const data = {
-  foo: 5,
-}
-
-validate(s, data)
-
-// Will throw error with following message
-// Validation error: foo expected Even got 5
-```
-
-```js
-import { extend } form 'ris'
-
-const even = (v) => v % 2 === 0
-
-extend('even', even, (v) => `Expect even number, but got – ${v}`)
+rule('even', even, (v) => `Expect even number, but got – ${v}`)
 ```
 
 ```js

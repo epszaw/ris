@@ -4,7 +4,7 @@ const {
   compositeValidData,
 } = require('__fixtures__/data/composite')
 
-describe('composition with default value', () => {
+describe('validate – composition with default value', () => {
   it('should replace multiple fields', () => {
     const primitivesSchema = {
       foo: [schema.string, 'bar'],
