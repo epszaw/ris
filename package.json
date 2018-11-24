@@ -41,7 +41,7 @@
   "size-limit": [
     {
       "path": "./ris.min.js",
-      "limit": "1 KB"
+      "limit": "2,99 KB"
     }
   ],
   "browserslist": [

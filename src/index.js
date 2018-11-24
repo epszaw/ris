@@ -77,6 +77,49 @@ const getDefaultValue = r => {
   return l instanceof Function ? null : l
 }
 
+const processValidationResult = dv => (d, p, e, r) => {
+  if (r[0]) return
+
+  if (dv) {
+    Object.assign(d, {
+      [p]: dv,
+    })
+  } else {
+    e.push(r[2](p))
+  }
+}
+
+const validateData = (s, d, p, e) => {
+  const isArr = Array.isArray(d)
+
+  if (isArr) {
+    validateArray(s, d, p, e)
+  } else {
+    validateObject(s, d, p, e)
+  }
+}
+
+const validateArray = (s, d, p, e) => {
+  console.log(d)
+}
+
+const validateObject = (s, d, p, e) => {
+  for (const i in d) {
+    const pp = p ? [p, i].join('.') : i
+
+    if (d[i] instanceof Object) {
+      validateObject(s[i], d[i], pp, e)
+    } else {
+      const dv = getDefaultValue(s[i])
+      const res = compose(
+        [].concat(dv ? s[i].slice(0, s[i].length - 1) : s[i]),
+      )(d[i])
+
+      processValidationResult(dv)(d, pp, e, res)
+    }
+  }
+}
+
 /**
  * Validate data with schema
  * @param {Object} s Schema, schema object created with schema methods (rules). Must includes rules
@@ -88,36 +131,11 @@ const getDefaultValue = r => {
  * @returns {Object} Returns given data on validation success
  */
 const validate = (s, d, p) => {
-  const nd = Object.assign({}, typeof d === 'string' ? JSON.parse(d) : d)
   const e = []
+  const isArr = Array.isArray(d)
+  const nd = isArr ? d.splice(0) : Object.assign({}, d)
 
-  Object.keys(nd).forEach(k => {
-    if (nd[k] instanceof Object) {
-      try {
-        const res = validate(s[k], nd[k], p ? `${p}.${k}` : k)
-
-        Object.assign(nd, {
-          [k]: res,
-        })
-      } catch (err) {
-        e.push(err.message)
-      }
-    } else {
-      const defaultValue = getDefaultValue(s[k])
-      const rls = [].concat(s[k])
-      const res = compose(defaultValue ? rls.slice(0, rls.length - 1) : rls)(
-        nd[k],
-      )
-
-      if (!res[0] && defaultValue) {
-        Object.assign(nd, {
-          [k]: defaultValue,
-        })
-      } else if (!res[0]) {
-        e.push(res[2](p ? `${p}.${k}` : k))
-      }
-    }
-  })
+  validateData(s, nd, p, e)
 
   if (e.length > 0) {
     throw new Error(e.join('\n'))
